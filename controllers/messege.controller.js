@@ -1,3 +1,4 @@
+const createHttpError = require('http-errors');
 const { Message } = require('../models');
 
 module.exports.createMessage = async (req, res, next) => {
@@ -20,10 +21,33 @@ module.exports.createMessage = async (req, res, next) => {
 
 module.exports.getAllMessages = async (req, res, next) => {
   try {
-    const {} = req;
 
-    const messages = await Message.find()
+    const messages = await Message.find();
+
+    res.send({data: messages});
+
   } catch(error) {
     next(error);
+  }
+}
+
+module.exports.getMessage = async (req, res, next) => {
+  try {
+    const {params: {messageId}, user } = req;
+
+    const message = await Message.findOne({
+      _id: messageId,
+      user
+    })
+
+    console.log(req.user._id);
+
+    if(!message) {
+      return (next(createHttpError(404, 'message not found')))
+    }
+
+    res.send({data: message});
+  } catch (error) {
+    next(error)
   }
 }
