@@ -20,11 +20,11 @@ const userSchema = new Schema ({
   isOnline: {
     type: Boolean,
     default: false
-  }
-  // messages: [{
-  //   tepe: Schema.Types.ObjectId,
-  //   ref: 'Message'
-  // }]
+  },
+  messages: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Message'
+  }]
 }, {
   timestamps: true
 })
