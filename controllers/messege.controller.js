@@ -40,7 +40,7 @@ module.exports.getMessage = async (req, res, next) => {
       user
     })
 
-    console.log(req.user._id);
+    console.log(req);
 
     if(!message) {
       return (next(createHttpError(404, 'message not found')))
@@ -49,5 +49,22 @@ module.exports.getMessage = async (req, res, next) => {
     res.send({data: message});
   } catch (error) {
     next(error)
+  }
+}
+
+module.exports.updateMessage = async (req, res, next) => {
+  try {
+    const {params: {messageId}, user, body } = req;
+
+    const updatedMessage = await Message.findOneAndUpdate({
+      _id: messageId,
+      user: user
+    }, body, {new: true});
+
+    res.send({data: updatedMessage})
+
+
+  } catch (error) {
+    next(error);
   }
 }
