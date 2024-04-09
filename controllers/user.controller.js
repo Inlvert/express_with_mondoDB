@@ -15,7 +15,7 @@ module.exports.createUser = async (req, res, next) => {
 module.exports.getUsers = async (req, res, next) => {
   try {
   
-    const user = await User.find();
+    const user = await User.find().populate('messages');
 
     res.send({data: user})
   } catch (error) {
@@ -29,7 +29,8 @@ module.exports.getUser = async (req, res, next) => {
       params: { userId },
     } = req;
 
-    const user = await User.findById(userId);
+    // const user = await User.findById(userId, 'firstName lastName email');
+    const user = await User.findById(userId).select('firstName lastName email');
 
     res.send({data: user})
   } catch (error) {

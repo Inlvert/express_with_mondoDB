@@ -21,7 +21,7 @@ module.exports.createMessage = async (req, res, next) => {
 
 module.exports.getAllMessages = async (req, res, next) => {
   try {
-    const messages = await Message.find();
+    const messages = await Message.find().populate('user', 'firstName');
 
     res.send({ data: messages });
   } catch (error) {
