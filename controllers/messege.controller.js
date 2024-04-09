@@ -10,6 +10,7 @@ module.exports.createMessage = async (req, res, next) => {
       user: user._id,
     });
 
+    await user.updateOne({ $push: {messages: message._id}})
     console.log(user);
 
     res.status(201).send({ data: message });
