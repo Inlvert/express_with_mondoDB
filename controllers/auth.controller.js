@@ -1,9 +1,10 @@
 const createHttpError = require("http-errors");
 const { User, RefreshToken } = require("../models");
-const jwt = require("jsonwebtoken");
-const { promisify } = require("util");
+const AuthService = require("../services/auth.service");
+// const jwt = require("jsonwebtoken");
+// const { promisify } = require("util");
 
-const jwtSign = promisify(jwt.sign);
+// const jwtSign = promisify(jwt.sign);
 
 module.exports.registartion = async (req, res, next) => {
   try {
@@ -11,37 +12,41 @@ module.exports.registartion = async (req, res, next) => {
 
     const user = await User.create(body);
 
-    // payload для токена
-    const tokenPayload = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    };
+    const userWithTokens = await AuthService.createSession(user);
 
-    // генерируем токен
-    const accessToken = await jwtSign(tokenPayload, "omkl44sr848g4rgyy", {
-      expiresIn: "1min",
-    });
+    res.send({ data: userWithTokens });
 
-    const refreshToken = await jwtSign(tokenPayload, "jhjnklygyuh54gth4h", {
-      expiresIn: "7d",
-    });
+    // // payload для токена
+    // const tokenPayload = {
+    //   id: user._id,
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    // };
 
-    // save refreshToken in DB
+    // // генерируем токен
+    // const accessToken = await jwtSign(tokenPayload, "omkl44sr848g4rgyy", {
+    //   expiresIn: "1min",
+    // });
 
-    await RefreshToken.create({ token: refreshToken, userId: user._id });
+    // const refreshToken = await jwtSign(tokenPayload, "jhjnklygyuh54gth4h", {
+    //   expiresIn: "7d",
+    // });
 
-    //отправим все на фронт
+    // // save refreshToken in DB
 
-    res.status(201).send({
-      data: {
-        user,
-        tokenPair: {
-          accessToken,
-          refreshToken,
-        },
-      },
-    });
+    // await RefreshToken.create({ token: refreshToken, userId: user._id });
+
+    // //отправим все на фронт
+
+    // res.status(201).send({
+    //   data: {
+    //     user,
+    //     tokenPair: {
+    //       accessToken,
+    //       refreshToken,
+    //     },
+    //   },
+    // });
   } catch (error) {
     next(error);
   }
@@ -65,37 +70,41 @@ module.exports.login = async (req, res, next) => {
       return next(createHttpError(404, "invalid data"));
     }
 
-    // payload для токена
-    const tokenPayload = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    };
+    const userWithTokens = await AuthService.createSession(user);
 
-    // генерируем токен
-    const accessToken = await jwtSign(tokenPayload, "omkl44sr848g4rgyy", {
-      expiresIn: "1min",
-    });
+    res.send({ data: userWithTokens });
 
-    const refreshToken = await jwtSign(tokenPayload, "jhjnklygyuh54gth4h", {
-      expiresIn: "7d",
-    });
+    // // payload для токена
+    // const tokenPayload = {
+    //   id: user._id,
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    // };
 
-    // save refreshToken in DB
+    // // генерируем токен
+    // const accessToken = await jwtSign(tokenPayload, "omkl44sr848g4rgyy", {
+    //   expiresIn: "1min",
+    // });
 
-    await RefreshToken.create({ token: refreshToken, userId: user._id });
+    // const refreshToken = await jwtSign(tokenPayload, "jhjnklygyuh54gth4h", {
+    //   expiresIn: "7d",
+    // });
 
-    // отправим все на фронт
+    // // save refreshToken in DB
 
-    res.status(201).send({
-      data: {
-        user,
-        tokenPair: {
-          accessToken,
-          refreshToken,
-        },
-      },
-    });
+    // await RefreshToken.create({ token: refreshToken, userId: user._id });
+
+    // // отправим все на фронт
+
+    // res.status(201).send({
+    //   data: {
+    //     user,
+    //     tokenPair: {
+    //       accessToken,
+    //       refreshToken,
+    //     },
+    //   },
+    // });
   } catch (error) {
     next(error);
   }
