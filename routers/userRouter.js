@@ -1,5 +1,6 @@
 const userRouter = require('express').Router();
 const userController = require('../controllers/user.controller');
+// const { cheackAccessToken } = require('../middlewares/token.mw');
 const { findUser } = require('../middlewares/findUser.mw');
 const messageRouter = require('./messageRouter');
 
