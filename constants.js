@@ -1,5 +1,20 @@
+require("dotenv").config();
+
+const {
+  ACCESS_TOKEN_SECRETE,
+  ACCESS_TOKEN_EXPIRES_IN,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRES_IN,
+  PORT,
+  DB_URL,
+} = process.env;
 const CONSTANTS = {
-  DB_URL: process.env.DB_URL || 'mongodb://127.0.0.1:27017/chat-new-DB'
-}
+  PORT: PORT || 5000,
+  DB_URL: DB_URL || "mongodb://127.0.0.1:27017/chat-new-DB",
+  ACCESS_TOKEN_SECRETE,
+  ACCESS_TOKEN_EXPIRES_IN,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRES_IN,
+};
 
 module.exports = CONSTANTS;
