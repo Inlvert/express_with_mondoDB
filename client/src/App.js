@@ -1,9 +1,26 @@
 import { Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import "./App.css";
 import HomePage from "./pages/Home";
 import LoginPage from "./pages/Login";
+import CONSTANT from "./constants";
+import { refresh } from "./redux/slices/authSlice";
 
 function App() {
+
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    const refreshTokenFromLocalStorege = localStorage.getItem(CONSTANT.REFRESH_TOKEN);
+
+    if(refreshTokenFromLocalStorege) {
+      dispatch(refresh(refreshTokenFromLocalStorege))
+    }
+  }, []);
+
+
   return (
     <div className="App">
       <Switch>
