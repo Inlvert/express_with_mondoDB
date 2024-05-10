@@ -32,7 +32,7 @@ httpClient.interceptors.response.use(
 
       accessToken = tokenPair.accessToken;
 
-      localStorage.setItem("refreshToken", tokenPair.refreshToken);
+      localStorage.setItem(CONSTANT.REFRESH_TOKEN, tokenPair.refreshToken);
     }
 
     // Any status code that lie within the range of 2xx cause this function to trigger
@@ -56,7 +56,7 @@ httpClient.interceptors.response.use(
 
       accessToken = tokenPair.accessToken;
 
-      localStorage.setItem("refreshToken", tokenPair.refreshToken);
+      localStorage.setItem(CONSTANT.REFRESH_TOKEN, tokenPair.refreshToken);
 
       error.config.headers["Authorization"] = `Bearer ${accessToken}`;
 
