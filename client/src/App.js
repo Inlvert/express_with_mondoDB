@@ -13,10 +13,10 @@ function App() {
 
 
   useEffect(() => {
-    const refreshTokenFromLocalStorege = localStorage.getItem(CONSTANT.REFRESH_TOKEN);
+    const refreshTokenFromLS = localStorage.getItem(CONSTANT.REFRESH_TOKEN);
 
-    if(refreshTokenFromLocalStorege) {
-      dispatch(refresh(refreshTokenFromLocalStorege))
+    if(refreshTokenFromLS) {
+      dispatch(refresh(refreshTokenFromLS));
     }
   }, []);
 

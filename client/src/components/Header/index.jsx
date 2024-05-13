@@ -1,7 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../../redux/slices/authSlice";
+import { clearTokens } from "../../api";
 
 function Header(props) {
+  const dispatch = useDispatch();
+
+  const hendleLogout = () => {
+    clearTokens();
+    dispatch(logout());
+  }
+
   return (
     <header>
       <nav>
@@ -16,6 +26,7 @@ function Header(props) {
           </li>
         </ul>
       </nav>
+      <button onClick={hendleLogout}>Logout</button>
     </header>
   );
 }
