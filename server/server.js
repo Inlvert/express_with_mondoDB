@@ -6,7 +6,11 @@ const messageController = require("./controllers/messege.controller.js");
 
 const server = http.createServer(app);
 
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*" // відкривае cors для всіх
+  }
+});
 
 io.on("connection", (socket) => {
   console.log("socket connencted");
