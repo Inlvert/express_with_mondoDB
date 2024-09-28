@@ -8,8 +8,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*" // відкривае cors для всіх
-  }
+    origin: "*", // відкривае cors для всіх
+  },
 });
 
 io.on("connection", (socket) => {
@@ -19,12 +19,17 @@ io.on("connection", (socket) => {
   // логика створення повідомлення в реалтайме
 
   socket.on("newMessage", async (newMessageData) => {
-    console.log("new message received");
-    console.log(newMessageData);
+    try {
+      console.log("new message received");
+      // console.log(newMessageData);
 
-    const newMessage = await messageController.createMessage(newMessageData);
+      const newMessage = await messageController.createMessage(newMessageData);
 
-    io.emit("newMessage", newMessage);
+      io.emit("newMessage", newMessage);
+    } catch (error) {
+
+      socket.emit("newMessageError", error)
+    }
   });
 
   // подія відключення користувача

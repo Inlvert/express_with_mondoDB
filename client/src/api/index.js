@@ -10,7 +10,7 @@ let accessToken = null;
 export const clearTokens = () => {
   accessToken = null;
   localStorage.removeItem(CONSTANT.REFRESH_TOKEN);
-}
+};
 
 // Add a request interceptor
 httpClient.interceptors.request.use(
@@ -43,7 +43,8 @@ httpClient.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;
-  }, async function (error) {
+  },
+  async function (error) {
     const {
       responce: { status },
     } = error;
@@ -81,3 +82,5 @@ export const registration = (userData) =>
 
 export const refresh = (refreshToken) =>
   httpClient.post("/auth/refresh", { refreshToken });
+
+export const getAllMessages = (options) => httpClient.get("/messages");

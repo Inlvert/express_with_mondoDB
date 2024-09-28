@@ -6,6 +6,7 @@ import HomePage from "./pages/Home";
 import LoginPage from "./pages/Login";
 import CONSTANT from "./constants";
 import { refresh } from "./redux/slices/authSlice";
+import ChatPage from "./pages/Chat";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <header className="App-header">
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/chat" component={ChatPage} />
         </header>
       </Switch>
     </div>

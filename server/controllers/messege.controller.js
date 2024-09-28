@@ -1,19 +1,19 @@
 const createHttpError = require("http-errors");
-const { Message } = require("../models");
+const { Message, User } = require("../models");
 
 module.exports.createMessage = async (req, res, next) => {
   try {
     const { user, body } = req;
 
-    const message = await Message.create({
-      ...body,
+    const newMessage = await Message.create({
+      body,
       user: user._id,
     });
 
-    await user.updateOne({ $push: {messages: message._id}})
-    console.log(user);
+    await User.updateOne({ _id: user._id}, { $push: {messages: newMessage._id}})
+    // console.log(user);
 
-    res.status(201).send({ data: message });
+    res.status(201).send({ data: newMessage });
   } catch (error) {
     next(error);
   }

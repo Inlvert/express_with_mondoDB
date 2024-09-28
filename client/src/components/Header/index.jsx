@@ -10,19 +10,20 @@ function Header(props) {
   const hendleLogout = () => {
     clearTokens();
     dispatch(logout());
-  }
+  };
 
   return (
     <header>
       <nav>
         <ul>
           <li>
-            <Link to='/'>Home</Link>
+            <Link to="/">Home</Link>
           </li>
-        </ul>
-        <ul>
           <li>
-            <Link to='/login'>Login</Link>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/chat">Chat</Link>
           </li>
         </ul>
       </nav>
